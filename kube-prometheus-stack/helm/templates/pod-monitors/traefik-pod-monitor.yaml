@@ -1,0 +1,16 @@
+{{ if true }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ template "kube-prometheus-stack.fullname" . }}-pod-monitor-traefik
+  labels:
+    release: {{ template "kube-prometheus-stack.fullname" . }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: traefik
+  podMetricsEndpoints:
+    - port: metrics
+      path: /metrics
+      interval: 1s
+{{ end }}

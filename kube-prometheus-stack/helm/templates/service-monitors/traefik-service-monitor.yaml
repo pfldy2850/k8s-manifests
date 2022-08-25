@@ -1,0 +1,16 @@
+{{ if false }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "kube-prometheus-stack.fullname" . }}-svc-monitor-traefik
+  labels:
+    release: {{ template "kube-prometheus-stack.fullname" . }}
+spec:
+  endpoints:
+  - interval: 1s
+    port: metrics
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: traefik
+      app.kubernetes.io/name: traefik
+{{ end }}

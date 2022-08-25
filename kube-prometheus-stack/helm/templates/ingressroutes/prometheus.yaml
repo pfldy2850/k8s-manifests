@@ -1,0 +1,27 @@
+{{- $kubePrometheusStack := index .Values "kube-prometheus-stack" }}
+{{- if and $kubePrometheusStack.grafana.enabled $kubePrometheusStack.grafana.sidecar.dashboards.enabled }}
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ template "kube-prometheus-stack.fullname" . }}-middleware-prometheus
+spec:
+  stripPrefix:
+    prefixes:
+      - /prometheus
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ template "kube-prometheus-stack.fullname" . }}-ingressroute-prometheus
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: PathPrefix(`/prometheus`)
+      middlewares:
+        - name: {{ template "kube-prometheus-stack.fullname" . }}-middleware-prometheus
+      services:
+        - name: {{ template "kube-prometheus-stack.fullname" . }}-prometheus
+          port: 9090
+{{- end }}

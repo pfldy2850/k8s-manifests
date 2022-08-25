@@ -2382,7 +2382,7 @@ kube-prometheus-stack:
 
       ## External URL at which Prometheus will be reachable.
       ##
-      externalUrl: ""
+      externalUrl: "/prometheus"
 
       ## Define which Nodes the Pods are scheduled on.
       ## ref: https://kubernetes.io/docs/user-guide/node-selection/
