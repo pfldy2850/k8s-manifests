@@ -1,0 +1,26 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ template "argo-cd.fullname" . }}-middleware-server
+spec:
+  stripPrefix:
+    prefixes:
+      - /argocd
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ template "argo-cd.fullname" . }}-ingressroute-server
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: PathPrefix(`/argocd`)
+      middlewares:
+        - name: {{ template "argo-cd.fullname" . }}-middleware-server
+      services:
+        - name: {{ template "argo-cd.fullname" . }}-server
+          port: 80
+  tls:
+    certResolver: default
