@@ -1,0 +1,4 @@
+image:
+  tag: blue
+
+replicas: 10

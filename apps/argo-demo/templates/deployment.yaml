@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: {{ include "argo-demo.fullname" . }}-rollouts
+spec:
+  replicas: {{ .Values.replicas }}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: {{ include "argo-demo.fullname" . }}-rollouts
+  template:
+    metadata:
+      labels:
+        app: {{ include "argo-demo.fullname" . }}-rollouts
+    spec:
+      containers:
+        - name: bluegreen-demo
+          image: argoproj/rollouts-demo:{{ .Values.image.tag }}
+          imagePullPolicy: Always
+          ports:
+          - name: http
+            containerPort: 8080
+            protocol: TCP
+  strategy:
+    canary:
+      canaryService: {{ include "argo-demo.fullname" . }}-svc-canary
+      stableService: {{ include "argo-demo.fullname" . }}-svc-stable
+      trafficRouting:
+        traefik:
+          weightedTraefikServiceName: {{ include "argo-demo.fullname" . }}-svc-weighted
+      steps:
+        - setWeight: 20
+        - pause: {}
+        - setWeight: 40
+        - pause: {duration: 10}
+        - setWeight: 60
+        - pause: {duration: 10}
+        - setWeight: 80
+        - pause: {duration: 10}
