@@ -48,7 +48,7 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ template "argo-cd.fullname" . }}-ingressroute
+  name: {{ template "argo-demo.fullname" . }}-ingressroute
 spec:
   entryPoints:
     - web
@@ -56,7 +56,7 @@ spec:
     - kind: Rule
       match: PathPrefix(`/argo/apps`)
       middlewares:
-        - name: {{ template "argo-cd.fullname" . }}-middleware
+        - name: {{ template "argo-demo.fullname" . }}-middleware
       services:
         - name: {{ include "argo-demo.fullname" . }}-svc-weighted
           kind: TraefikService
