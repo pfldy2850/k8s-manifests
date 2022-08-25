@@ -1,6 +1,6 @@
 argo-rollouts:
   # -- Install and upgrade CRDs
-  installCRDs: true
+  installCRDs: false
   # -- Keep CRD's on helm uninstall
   keepCRDs: true
 
@@ -55,11 +55,11 @@ argo-rollouts:
     replicas: 1
     image:
       # -- Registry to use
-      registry: quay.io
+      registry: dongyonglee94
       # -- Repository to use
-      repository: argoproj/argo-rollouts
+      repository: argo-rollouts
       # -- Overrides the image tag (default is the chart appVersion)
-      tag: ""
+      tag: v1.3.0-rc1
       # -- Image pull policy
       pullPolicy: IfNotPresent
 
