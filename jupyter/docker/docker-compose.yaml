@@ -1,0 +1,16 @@
+services:
+  jupyter:
+    image: jupyter/pyspark-notebook:aarch64-python-3.10.6
+    ports:
+      - 8888:8888
+    environment:
+      NB_USER: $USER
+      CHOWN_HOME: yes
+    volumes:
+      - $JUPYTER_VOLUME:$JUPYTER_VOLUME
+    # >>> passwd("jupyter", algorithm="sha256")
+    # 'sha256:438ef8962c62:bc6d447144a7954ab0293e68406bad576761aa58f5bf7a642e5530c331b4fdb7'
+    command: >-
+      start-notebook.sh
+        --NotebookApp.password='sha256:438ef8962c62:bc6d447144a7954ab0293e68406bad576761aa58f5bf7a642e5530c331b4fdb7'
+    working_dir: $JUPYTER_VOLUME
