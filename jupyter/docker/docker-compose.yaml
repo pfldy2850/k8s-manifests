@@ -1,6 +1,7 @@
 services:
   jupyter:
     image: jupyter/pyspark-notebook:aarch64-python-3.10.6
+    user: root
     ports:
       - 8888:8888
     environment:
