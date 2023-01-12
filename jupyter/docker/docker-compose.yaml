@@ -1,17 +1,30 @@
 services:
   jupyter:
     image: jupyter/pyspark-notebook:aarch64-python-3.10.6
+    container_name: jupyter
     user: root
     ports:
       - 8888:8888
+      - 6006:6006
     environment:
       NB_USER: $USER
       CHOWN_HOME: yes
+      GRANT_SUDO: "yes"
+      TZ: Asia/Seoul
     volumes:
       - $JUPYTER_VOLUME:$JUPYTER_VOLUME
     # >>> passwd("jupyter", algorithm="sha256")
     # 'sha256:438ef8962c62:bc6d447144a7954ab0293e68406bad576761aa58f5bf7a642e5530c331b4fdb7'
     command: >-
       start-notebook.sh
-        --NotebookApp.password='sha256:438ef8962c62:bc6d447144a7954ab0293e68406bad576761aa58f5bf7a642e5530c331b4fdb7'
+        --NotebookApp.token=''
     working_dir: $JUPYTER_VOLUME
+  selenium-standalone-chromium:
+    image: seleniarm/standalone-chromium:latest
+    container_name: selenium-standalone-chromium
+    ports:
+      - 4444:4444
+      - 7900:7900
+    shm_size: 2gb
+    environment:
+      TZ: Asia/Seoul

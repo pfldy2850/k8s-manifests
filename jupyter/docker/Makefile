@@ -6,5 +6,10 @@ up:
 	export JUPYTER_VOLUME=${JUPYTER_VOLUME} && \
 		docker compose up jupyter -d 
 
+up-all:
+	export USER=${USER} && \
+	export JUPYTER_VOLUME=${JUPYTER_VOLUME} && \
+		docker compose up -d
+
 down:
 	docker compose down -v
