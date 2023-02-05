@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-es-1
+spec:
+  capacity:
+    storage: 100M
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: hostpath
+  hostPath:
+    path: /Users/dongyonglee/Storage/es-1
+    type: DirectoryOrCreate
