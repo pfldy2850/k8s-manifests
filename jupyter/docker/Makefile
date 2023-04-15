@@ -1,5 +1,5 @@
 USER=$$(id -un)
-JUPYTER_VOLUME=/Users/${USER}/Workspace/jupyter
+JUPYTER_VOLUME=/Users/${USER}/Workspace
 
 up:
 	export USER=${USER} && \
