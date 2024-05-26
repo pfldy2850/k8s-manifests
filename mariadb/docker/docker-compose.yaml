@@ -1,0 +1,14 @@
+services:
+  db:
+    container_name: mariadb_db
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+
+  adminer:
+    container_name: mariadb_adminer
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
